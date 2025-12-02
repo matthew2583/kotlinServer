@@ -1,0 +1,3 @@
+Id,Title,SWG,Measure,Count,Price,Cost,ShipmentDateTime,DumpTruck,Washing,Manager
+de42a00f-7f43-4d10-808d-bee47fdeef49,Песчано-гравийная смесь (ПГС),Песок речной,т,36,640,22.3488,"2024-01-01T00:00:00",accfe76f-9a9e-4cb4-8876-d36daa22f924,True,de42a00f-7f43-4d10-808d-bee47fdeef49
+2b52fcb1-34ec-48d2-95f2-b79f2d9c3c70,Песчано-гравийная смесь (ПГС),Щебень гранитный,м3,14,2660,36.1228,"2024-01-01T00:00:00",accfe76f-9a9e-4cb4-8876-d36daa22f924,True,de42a00f-7f43-4d10-808d-bee47fdeef49
