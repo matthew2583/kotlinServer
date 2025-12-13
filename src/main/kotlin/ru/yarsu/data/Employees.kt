@@ -1,6 +1,7 @@
 package ru.yarsu.data
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import ru.yarsu.internal.Roles
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -15,4 +16,6 @@ data class Employees(
     val registrationDateTime: LocalDateTime,
     @field:JsonProperty("Email")
     val email: String,
+    @field:JsonProperty("Role")
+    val role: Roles,
 )

@@ -45,4 +45,10 @@ object GetResponse {
 
     // 204
     fun responseNoContent(): Response = Response(Status.NO_CONTENT)
+
+    // 401
+    fun responseUnauthorized(body: Any): Response =
+        Response(Status.UNAUTHORIZED)
+            .header("Content-Type", "application/json; charset=utf-8")
+            .body(mapper.writeValueAsString(body))
 }

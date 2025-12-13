@@ -9,11 +9,6 @@ import java.time.format.DateTimeParseException
 object QueryValidation {
     private val allowedRecordsPerPage = setOf(5, 10, 20, 50)
 
-    data class PaginationParameters(
-        val page: Int,
-        val recordsPerPage: Int,
-    )
-
     private fun error(message: String): Response = GetResponse.responseBadRequest(message)
 
     fun validatePage(pageStr: String?): Response? {
@@ -55,7 +50,7 @@ object QueryValidation {
         val from: LocalDate =
             try {
                 LocalDate.parse(fromStr)
-            } catch (e: DateTimeParseException) {
+            } catch (_: DateTimeParseException) {
                 return error(
                     "Некорректное значение параметра from: дата передана в некорректном формате",
                 ) to null
@@ -64,7 +59,7 @@ object QueryValidation {
         val to: LocalDate =
             try {
                 LocalDate.parse(toStr)
-            } catch (e: DateTimeParseException) {
+            } catch (_: DateTimeParseException) {
                 return error(
                     "Некорректное значение параметра to: дата передана в некорректном формате",
                 ) to null
@@ -87,7 +82,7 @@ object QueryValidation {
 
         return try {
             null to SwgType.fromString(swgStr.trim())
-        } catch (e: IllegalArgumentException) {
+        } catch (_: IllegalArgumentException) {
             error(
                 "Некорректное значение параметра by-swg-type: " +
                     "ожидается одно из: ${SwgType.entries.joinToString(", ") { it.displayName }}," +
@@ -104,7 +99,7 @@ object QueryValidation {
         val year =
             try {
                 yearStr.toInt()
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 return error(
                     "Некорректное значение параметра year. " +
                         "Ожидалось целое положительное число (>= 2000), но получено " + yearStr,

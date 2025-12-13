@@ -36,7 +36,7 @@ fun updateShipmentHandlerV2(
         val rawRequest =
             try {
                 rawShipmentRequestLens(request)
-            } catch (e: LensFailure) {
+            } catch (_: LensFailure) {
                 return@updateShipmentHandlerV2 GetResponse.responseBadRequest(
                     mapOf(
                         "Value" to request.bodyString(),
@@ -54,6 +54,18 @@ fun updateShipmentHandlerV2(
             rawRequest.asValidRequestOrNull()
                 ?: return@updateShipmentHandlerV2 GetResponse.responseBadRequest(
                     mapOf("Error" to "Неизвестная ошибка при преобразовании запроса"),
+                )
+
+        val managerId =
+            body.managerId
+                ?: return@updateShipmentHandlerV2 GetResponse.responseBadRequest(
+                    mapOf(
+                        "Manager" to
+                            mapOf(
+                                "Value" to null,
+                                "Error" to "Поле обязательно",
+                            ),
+                    ),
                 )
 
         val employee = employeesStorage.getEmployeesById(body.managerId)

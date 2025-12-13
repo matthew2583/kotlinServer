@@ -111,7 +111,10 @@ class ShipmentStorage(
 
     fun hasShipmentsByDumpTruck(dumpTruckId: UUID): Boolean = shipmentList.any { it.dumpTruck == dumpTruckId }
 
-    fun updateShipmentTitle(id: UUID, newTitle: String): Boolean {
+    fun updateShipmentTitle(
+        id: UUID,
+        newTitle: String,
+    ): Boolean {
         val index = shipmentList.indexOfFirst { it.id == id }
         if (index == -1) return false
 

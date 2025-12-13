@@ -12,7 +12,7 @@ val swgTypeLens =
             { type ->
                 try {
                     SwgType.fromString(type)
-                } catch (e: java.lang.IllegalArgumentException) {
+                } catch (_: IllegalArgumentException) {
                     throw LensFailure(message = "Некорректное значение параметра by-swg-type: не соответствует типу ПГС")
                 }
             },

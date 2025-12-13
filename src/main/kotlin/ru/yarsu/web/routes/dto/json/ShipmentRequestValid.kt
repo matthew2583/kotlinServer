@@ -15,18 +15,20 @@ data class ValidShipmentRequest(
     val shipmentDateTime: LocalDateTime,
     val washing: Boolean,
     val dumpTruckId: UUID,
-    val managerId: UUID,
+    val managerId: UUID?,
 )
 
 fun ShipmentRequest.asValidRequestOrNull(): ValidShipmentRequest? {
     val title = parseTitle() ?: return null
     val swg = parseSwgType() ?: return null
     val measure = parseMeasure() ?: return null
+
     val count = parseBigDecimal(count) ?: return null
     val price = parseBigDecimal(price) ?: return null
     val cost = parseBigDecimal(cost) ?: return null
+
     val dumpTruckId = parseUuid(dumpTruck) ?: return null
-    val managerId = parseUuid(manager) ?: return null
+    val managerId = parseUuid(manager)
 
     val shipmentDateTime = parseDateTimeWithDefault()
     val washing = parseBoolean()

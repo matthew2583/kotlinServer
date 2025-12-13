@@ -49,7 +49,7 @@ fun reportByMonthHandler(shipmentStorage: ShipmentStorage): HttpHandler =
                     GetResponse.responseBadRequest("Неизвестная ошибка")
                 }
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             GetResponse.responseBadRequest("Неизвестная ошибка")
         }
     }

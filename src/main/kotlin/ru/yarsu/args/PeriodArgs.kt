@@ -34,7 +34,7 @@ class FromDateValidator : IParameterValidator {
         }
         try {
             LocalDate.parse(value)
-        } catch (ex: DateTimeParseException) {
+        } catch (_: DateTimeParseException) {
             throw ParameterException("Ошибка: параметр --from должен быть датой в формате YYYY-MM-DD: $value")
         }
     }
@@ -50,7 +50,7 @@ class ToDateValidator : IParameterValidator {
         }
         try {
             LocalDate.parse(value)
-        } catch (ex: DateTimeParseException) {
+        } catch (_: DateTimeParseException) {
             throw ParameterException("Ошибка: параметр --to должен быть датой в формате YYYY-MM-DD: $value")
         }
     }

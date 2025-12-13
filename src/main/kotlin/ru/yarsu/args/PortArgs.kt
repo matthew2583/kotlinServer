@@ -26,7 +26,7 @@ class PortValidator : IParameterValidator {
             if (port !in 1024..65535) {
                 throw ParameterException("Неверный порт: $port. Допустимые значения 1024–65535.")
             }
-        } catch (e: NumberFormatException) {
+        } catch (_: NumberFormatException) {
             throw ParameterException("Порт должен быть числом, получено: $value")
         }
     }

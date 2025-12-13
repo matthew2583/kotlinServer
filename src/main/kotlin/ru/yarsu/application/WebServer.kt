@@ -1,9 +1,9 @@
 package ru.yarsu.application
 
-import org.http4k.core.then
 import org.http4k.server.Netty
 import org.http4k.server.asServer
 import ru.yarsu.hook.shutdownHook
+import ru.yarsu.jwt.JwtTools
 import ru.yarsu.storage.EmployeesStorage
 import ru.yarsu.storage.ShipmentStorage
 import ru.yarsu.storage.TrucksStorage
@@ -19,6 +19,7 @@ class WebServer {
         shipmentsFile: String,
         trucksFile: String,
         employeesFile: String,
+        jwtTools: JwtTools,
     ) {
         shutdownHook(
             shipmentStorage,
@@ -30,8 +31,13 @@ class WebServer {
         )
 
         val routes =
-            applicationRoutes(shipmentStorage, trucksStorage, employeesStorage)
-                .withFilter(lensFailureFilter)
+            applicationRoutes(
+                shipmentStorage,
+                trucksStorage,
+                employeesStorage,
+                jwtTools,
+            ).withFilter(lensFailureFilter)
+
         routes.asServer(Netty(port)).start()
         println("Сервер запущен: http://localhost:$port")
     }

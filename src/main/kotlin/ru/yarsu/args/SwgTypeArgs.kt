@@ -1,6 +1,5 @@
 package ru.yarsu.args
 
-import com.beust.jcommander.IParameterValidator
 import com.beust.jcommander.IStringConverter
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.ParameterException

@@ -51,17 +51,20 @@ class CsvParser {
                 position = row.getValue("Position"),
                 registrationDateTime = validateShipmentDateTime(row.getValue("RegistrationDateTime")),
                 email = row.getValue("Email"),
+                role = validateRoles(row.getValue("Role")),
             )
         }
 
     private fun validateID(value: String): UUID =
         try {
             UUID.fromString(value)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             throw IllegalArgumentException("Ошибка: некорректный UUID - $value")
         }
 
     private fun validateSWG(value: String): SwgType = SwgType.fromString(value)
+
+    private fun validateRoles(value: String): Roles = Roles.fromString(value)
 
     private fun validateMeasure(value: String): String {
         val t = value
@@ -81,7 +84,7 @@ class CsvParser {
                 throw IllegalArgumentException("Ошибка: поле $fieldName должно быть положительным - $value")
             }
             bd
-        } catch (e: NumberFormatException) {
+        } catch (_: NumberFormatException) {
             throw IllegalArgumentException("Ошибка: поле $fieldName должно быть числом - $value")
         }
 
@@ -92,7 +95,10 @@ class CsvParser {
     ): BigDecimal {
         val maxCost = price.multiply(count).divide(BigDecimal(1000))
         if (cost > maxCost) {
-            throw IllegalArgumentException("Ошибка: Cost не может быть больше Price*Count/1000 cost=$cost, max=$maxCost")
+            throw IllegalArgumentException(
+                "Ошибка: Cost не может быть больше Price*Count/1000 cost=$cost, " +
+                    "max=$maxCost",
+            )
         }
         return cost
     }
@@ -100,7 +106,7 @@ class CsvParser {
     private fun validateShipmentDateTime(value: String): LocalDateTime =
         try {
             LocalDateTime.parse(value)
-        } catch (e: DateTimeParseException) {
+        } catch (_: DateTimeParseException) {
             throw IllegalArgumentException("Ошибка: некорректная дата/время ShipmentDateTime - $value")
         }
 
@@ -119,7 +125,7 @@ class CsvParser {
                 throw IllegalArgumentException("Ошибка: значение в поле capacity должно быть больше нуля")
             }
             valueDouble
-        } catch (e: NumberFormatException) {
+        } catch (_: NumberFormatException) {
             throw IllegalArgumentException("Ошибка: в поле capacity должно быть значение Double")
         }
 }
@@ -131,6 +137,6 @@ private fun validateVolume(value: String): Double =
             throw IllegalArgumentException("Ошибка: значение в поле volume должно быть больше нуля")
         }
         valueDouble
-    } catch (e: NumberFormatException) {
+    } catch (_: NumberFormatException) {
         throw IllegalArgumentException("Ошибка: в поле volume должно быть значение Double")
     }

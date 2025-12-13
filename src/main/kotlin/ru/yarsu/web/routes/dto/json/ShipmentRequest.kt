@@ -43,7 +43,7 @@ fun ShipmentRequest.parseSwgType(): SwgType? =
 
 fun ShipmentRequest.parseMeasure(): String? =
     when (measure) {
-        is String -> measure.toString().trim().takeIf { it in setOf("м3", "т") }
+        is String -> measure.trim().takeIf { it in setOf("м3", "т") }
         else -> null
     }
 
@@ -69,13 +69,13 @@ fun ShipmentRequest.parseDateTimeWithDefault(): LocalDateTime = parseDateTime() 
 
 fun ShipmentRequest.parseBoolean(): Boolean =
     when (washing) {
-        is String -> washing.toString().toBooleanStrictOrNull() ?: false
+        is String -> washing.toBooleanStrictOrNull() ?: false
         is Boolean -> washing
         else -> false
     }
 
 fun ShipmentRequest.parseUuid(field: Any?): UUID? =
     when (field) {
-        is String -> runCatching { UUID.fromString(field.toString().trim()) }.getOrNull()
+        is String -> runCatching { UUID.fromString(field.trim()) }.getOrNull()
         else -> null
     }

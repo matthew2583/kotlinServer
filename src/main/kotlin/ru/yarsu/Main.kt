@@ -3,6 +3,7 @@ package ru.yarsu
 import com.beust.jcommander.JCommander
 import ru.yarsu.application.CommandExecutor
 import ru.yarsu.application.WebServer
+import ru.yarsu.args.KeyArgs
 import ru.yarsu.args.PathArgs
 import ru.yarsu.args.PortArgs
 import ru.yarsu.cmd.ListByPeriodCmd
@@ -11,19 +12,31 @@ import ru.yarsu.cmd.ListCmd
 import ru.yarsu.cmd.ReportCmd
 import ru.yarsu.cmd.ShowShipmentCmd
 import ru.yarsu.internal.CsvParser
+import ru.yarsu.jwt.JwtTools
 import ru.yarsu.storage.EmployeesStorage
 import ru.yarsu.storage.ShipmentStorage
 import ru.yarsu.storage.TrucksStorage
 import java.io.File
 import kotlin.system.exitProcess
 
+data class ParsedArgs(
+    val pathArgs: PathArgs,
+    val portArgs: PortArgs,
+    val keyArgs: KeyArgs,
+    val command: String?,
+)
+
 fun main(args: Array<String>) {
     try {
-        val (pathArgs, portArgs, command) = parseArguments(args)
+        val parsed = parseArguments(args)
+        val pathArgs = parsed.pathArgs
+        val portArgs = parsed.portArgs
+        val keyArgs = parsed.keyArgs
+        val command = parsed.command
         val csvParser = CsvParser()
 
         if (command == null) {
-            startWebServer(pathArgs, portArgs, csvParser)
+            startWebServer(pathArgs, portArgs, keyArgs, csvParser)
         } else {
             executeCommand(command, pathArgs, csvParser)
         }
@@ -33,15 +46,17 @@ fun main(args: Array<String>) {
     }
 }
 
-private fun parseArguments(args: Array<String>): Triple<PathArgs, PortArgs, String?> {
+private fun parseArguments(args: Array<String>): ParsedArgs {
     val pathArgs = PathArgs()
     val portArgs = PortArgs()
+    val keyArgs = KeyArgs()
 
     val jCommander =
         JCommander
             .newBuilder()
             .addObject(pathArgs)
             .addObject(portArgs)
+            .addObject(keyArgs)
             .addCommand("list", ListCmd())
             .addCommand("show-shipment", ShowShipmentCmd())
             .addCommand("list-by-swg", ListBySwgCmd())
@@ -57,7 +72,7 @@ private fun parseArguments(args: Array<String>): Triple<PathArgs, PortArgs, Stri
         exitProcess(1)
     }
 
-    return Triple(pathArgs, portArgs, jCommander.parsedCommand)
+    return ParsedArgs(pathArgs, portArgs, keyArgs, jCommander.parsedCommand)
 }
 
 private fun validateAndGetFiles(pathArgs: PathArgs): Triple<String, String, String> {
@@ -76,6 +91,7 @@ private fun validateAndGetFiles(pathArgs: PathArgs): Triple<String, String, Stri
 private fun startWebServer(
     pathArgs: PathArgs,
     portArgs: PortArgs,
+    keyArgs: KeyArgs,
     csvParser: CsvParser,
 ) {
     val (shipmentsFile, trucksFile, employeesFile) = validateAndGetFiles(pathArgs)
@@ -86,7 +102,9 @@ private fun startWebServer(
 
     val shipmentStorage = ShipmentStorage(shipmentList)
     val trucksStorage = TrucksStorage(trucksList)
-    val employeesStorage = EmployeesStorage(employeesList)
+    val employeesStorage = EmployeesStorage(employeesList, keyArgs.secret.toString())
+
+    val jwtTools = JwtTools(keyArgs.secret.toString())
 
     val webServer = WebServer()
     webServer.start(
@@ -97,6 +115,7 @@ private fun startWebServer(
         shipmentsFile,
         trucksFile,
         employeesFile,
+        jwtTools,
     )
 }
 

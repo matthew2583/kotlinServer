@@ -22,7 +22,7 @@ fun createShipmentHandlerV2(
         val rawRequest =
             try {
                 rawShipmentRequestLens(request)
-            } catch (e: LensFailure) {
+            } catch (_: LensFailure) {
                 return@createShipmentHandlerV2 GetResponse.responseBadRequest(
                     mapOf(
                         "Value" to request.bodyString(),
@@ -40,6 +40,18 @@ fun createShipmentHandlerV2(
             rawRequest.asValidRequestOrNull()
                 ?: return@createShipmentHandlerV2 GetResponse.responseBadRequest(
                     mapOf("Error" to "Неизвестная ошибка при преобразовании запроса"),
+                )
+
+        val managerId =
+            body.managerId
+                ?: return@createShipmentHandlerV2 GetResponse.responseBadRequest(
+                    mapOf(
+                        "Manager" to
+                            mapOf(
+                                "Value" to null,
+                                "Error" to "Поле обязательно",
+                            ),
+                    ),
                 )
 
         val employee = employeesStorage.getEmployeesById(body.managerId)
@@ -68,7 +80,8 @@ fun createShipmentHandlerV2(
             return@createShipmentHandlerV2 GetResponse.responseForbidden(
                 mapOf(
                     "Error" to
-                        "Невозможно создать отгрузку, так как работник не был зарегистрирован в системе (ShipmentDateTime < Employee->RegistrationDateTime)",
+                        "Невозможно создать отгрузку, так как работник не был зарегистрирован в системе " +
+                        "(ShipmentDateTime < Employee->RegistrationDateTime)",
                 ),
             )
         }
@@ -78,7 +91,7 @@ fun createShipmentHandlerV2(
                 mapOf(
                     "Error" to
                         "Невозможно загрузить заданный объём (Measure=м3 и Count>DumpTruck->Volume) или вес " +
-                            "(Measure=т и Count>DumpTruck->Capacity) в выбранный самосвал.",
+                        "(Measure=т и Count>DumpTruck->Capacity) в выбранный самосвал.",
                 ),
             )
         } else if (body.measure == "м3" && body.count > BigDecimal.valueOf(truck.volume)) {
@@ -86,7 +99,7 @@ fun createShipmentHandlerV2(
                 mapOf(
                     "Error" to
                         "Невозможно загрузить заданный объём (Measure=м3 и Count>DumpTruck->Volume) или вес " +
-                            "(Measure=т и Count>DumpTruck->Capacity) в выбранный самосвал.",
+                        "(Measure=т и Count>DumpTruck->Capacity) в выбранный самосвал.",
                 ),
             )
         }

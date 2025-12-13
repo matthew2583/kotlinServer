@@ -38,7 +38,7 @@ fun shipmentsListPagedHandler(shipmentStorage: ShipmentStorage): HttpHandler =
                     GetResponse.responseOK(responseData)
                 }
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             GetResponse.responseBadRequest("Неизвестная ошибка")
         }
     }

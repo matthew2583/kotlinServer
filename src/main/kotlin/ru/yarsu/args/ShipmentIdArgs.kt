@@ -26,7 +26,7 @@ class UUIDValidator : IParameterValidator {
         }
         try {
             UUID.fromString(value)
-        } catch (ex: IllegalArgumentException) {
+        } catch (_: IllegalArgumentException) {
             throw ParameterException("Ошибка: некорректный UUID передан в аргументы $value")
         }
     }

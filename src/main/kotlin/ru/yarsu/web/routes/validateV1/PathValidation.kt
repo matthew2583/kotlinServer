@@ -16,7 +16,7 @@ object PathValidation {
 
         return try {
             null to UUID.fromString(id.trim())
-        } catch (e: IllegalArgumentException) {
+        } catch (_: IllegalArgumentException) {
             error(
                 "Некорректное значение параметра ID: " +
                     "значение должно быть в формате UUID, но получено: $id",
