@@ -1,6 +1,6 @@
 package ru.yarsu.web.routes.dto.form
 
-import ru.yarsu.internal.SwgType
+import ru.yarsu.domain.SwgType
 
 fun InvoiceRequest.validateToErrors(): Map<String, Map<String, Any?>> {
     val errors = mutableMapOf<String, Map<String, Any?>>()

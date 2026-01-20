@@ -2,8 +2,8 @@ package ru.yarsu.application
 
 import org.http4k.server.Netty
 import org.http4k.server.asServer
-import ru.yarsu.hook.shutdownHook
-import ru.yarsu.jwt.JwtTools
+import ru.yarsu.application.shutdownHook
+import ru.yarsu.auth.JwtTools
 import ru.yarsu.storage.EmployeesStorage
 import ru.yarsu.storage.ShipmentStorage
 import ru.yarsu.storage.TrucksStorage
@@ -18,16 +18,13 @@ class WebServer {
         port: Int,
         shipmentsFile: String,
         trucksFile: String,
-        employeesFile: String,
         jwtTools: JwtTools,
     ) {
         shutdownHook(
             shipmentStorage,
             trucksStorage,
-            employeesStorage,
             shipmentsFile,
             trucksFile,
-            employeesFile,
         )
 
         val routes =

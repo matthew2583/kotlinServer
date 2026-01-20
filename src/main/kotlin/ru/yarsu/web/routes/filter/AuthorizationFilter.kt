@@ -2,9 +2,9 @@ package ru.yarsu.web.routes.filter
 
 import org.http4k.core.Filter
 import org.http4k.core.HttpHandler
-import ru.yarsu.jwt.JwtTools
+import ru.yarsu.auth.JwtTools
 import ru.yarsu.storage.EmployeesStorage
-import ru.yarsu.web.routes.v3.authorization.AuthorizationFilterHandler
+import ru.yarsu.web.routes.handlers.authorization.AuthorizationFilterHandler
 
 class AuthorizationFilter(
     private val jwtTools: JwtTools,

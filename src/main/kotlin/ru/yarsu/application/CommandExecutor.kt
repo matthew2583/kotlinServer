@@ -1,10 +1,10 @@
 package ru.yarsu.application
 
-import ru.yarsu.cmd.ListByPeriodCmd
-import ru.yarsu.cmd.ListBySwgCmd
-import ru.yarsu.cmd.ListCmd
-import ru.yarsu.cmd.ReportCmd
-import ru.yarsu.cmd.ShowShipmentCmd
+import ru.yarsu.cli.commands.ListByPeriodCmd
+import ru.yarsu.cli.commands.ListBySwgCmd
+import ru.yarsu.cli.commands.ListCmd
+import ru.yarsu.cli.commands.ReportCmd
+import ru.yarsu.cli.commands.ShowShipmentCmd
 import ru.yarsu.data.Shipment
 
 class CommandExecutor(

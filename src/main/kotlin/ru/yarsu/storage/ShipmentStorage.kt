@@ -1,7 +1,7 @@
 package ru.yarsu.storage
 
 import ru.yarsu.data.Shipment
-import ru.yarsu.internal.SwgType
+import ru.yarsu.domain.SwgType
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -17,16 +17,6 @@ class ShipmentStorage(
     fun getShipmentById(id: UUID?): Shipment? = shipmentList.find { it.id == id }
 
     fun getShipmentsBySwgType(swgType: SwgType?): List<Shipment> = shipmentList.filter { it.swg == swgType }
-
-    fun getShipmentsByManager(managerId: UUID): List<Shipment> = shipmentList.filter { it.manager == managerId }
-
-    fun getShipmentsByDate(date: LocalDate): List<Shipment> = shipmentList.filter { it.shipmentDateTime.toLocalDate() == date }
-
-    fun getShipmentsWithMinCost(minCost: BigDecimal): List<Shipment> = shipmentList.filter { it.cost >= minCost }
-
-    fun hasShipmentsByManager(managerId: UUID): Boolean = shipmentList.any { it.manager == managerId }
-
-    fun getShipmentsByWashing(washing: Boolean): List<Shipment> = shipmentList.filter { it.washing == washing }
 
     fun getShipmentsByPeriod(
         from: LocalDate,
@@ -110,18 +100,4 @@ class ShipmentStorage(
     fun deleteShipment(id: UUID): Boolean = shipmentList.removeIf { it.id == id }
 
     fun hasShipmentsByDumpTruck(dumpTruckId: UUID): Boolean = shipmentList.any { it.dumpTruck == dumpTruckId }
-
-    fun updateShipmentTitle(
-        id: UUID,
-        newTitle: String,
-    ): Boolean {
-        val index = shipmentList.indexOfFirst { it.id == id }
-        if (index == -1) return false
-
-        val existingShipment = shipmentList[index]
-        val updatedShipment = existingShipment.copy(title = newTitle)
-
-        shipmentList[index] = updatedShipment
-        return true
-    }
 }

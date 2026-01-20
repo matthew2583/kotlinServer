@@ -3,8 +3,6 @@ package ru.yarsu.web.routes.filter
 import org.http4k.core.Filter
 import org.http4k.lens.LensFailure
 import ru.yarsu.web.routes.util.GetResponse
-import kotlin.text.isNotBlank
-import kotlin.to
 
 val lensFailureFilter =
     Filter { next ->

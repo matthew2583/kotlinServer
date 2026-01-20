@@ -2,8 +2,6 @@ package ru.yarsu.web.routes.util
 
 import ru.yarsu.data.Employees
 import ru.yarsu.data.Shipment
-import kotlin.collections.sortedWith
-import kotlin.comparisons.thenBy
 
 object SortingUtils {
     fun sortShipmentsByDateTime(shipments: List<Shipment>): List<Shipment> =

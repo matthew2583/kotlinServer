@@ -1,7 +1,7 @@
 package ru.yarsu.web.routes.filter
 
 import org.http4k.lens.RequestKey
-import ru.yarsu.internal.Roles
+import ru.yarsu.domain.Roles
 import java.util.UUID
 
 object AuthKeys {

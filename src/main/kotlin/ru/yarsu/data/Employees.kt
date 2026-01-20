@@ -1,7 +1,7 @@
 package ru.yarsu.data
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import ru.yarsu.internal.Roles
+import ru.yarsu.domain.Roles
 import java.time.LocalDateTime
 import java.util.UUID
 

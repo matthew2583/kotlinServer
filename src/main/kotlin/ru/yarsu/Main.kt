@@ -3,16 +3,16 @@ package ru.yarsu
 import com.beust.jcommander.JCommander
 import ru.yarsu.application.CommandExecutor
 import ru.yarsu.application.WebServer
-import ru.yarsu.args.KeyArgs
-import ru.yarsu.args.PathArgs
-import ru.yarsu.args.PortArgs
-import ru.yarsu.cmd.ListByPeriodCmd
-import ru.yarsu.cmd.ListBySwgCmd
-import ru.yarsu.cmd.ListCmd
-import ru.yarsu.cmd.ReportCmd
-import ru.yarsu.cmd.ShowShipmentCmd
-import ru.yarsu.internal.CsvParser
-import ru.yarsu.jwt.JwtTools
+import ru.yarsu.auth.JwtTools
+import ru.yarsu.cli.args.KeyArgs
+import ru.yarsu.cli.args.PathArgs
+import ru.yarsu.cli.args.PortArgs
+import ru.yarsu.cli.commands.ListByPeriodCmd
+import ru.yarsu.cli.commands.ListBySwgCmd
+import ru.yarsu.cli.commands.ListCmd
+import ru.yarsu.cli.commands.ReportCmd
+import ru.yarsu.cli.commands.ShowShipmentCmd
+import ru.yarsu.csv.CsvParser
 import ru.yarsu.storage.EmployeesStorage
 import ru.yarsu.storage.ShipmentStorage
 import ru.yarsu.storage.TrucksStorage
@@ -114,7 +114,6 @@ private fun startWebServer(
         portArgs.ports,
         shipmentsFile,
         trucksFile,
-        employeesFile,
         jwtTools,
     )
 }

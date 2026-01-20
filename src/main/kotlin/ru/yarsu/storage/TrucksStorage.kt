@@ -1,7 +1,7 @@
 package ru.yarsu.storage
 
 import ru.yarsu.data.Trucks
-import ru.yarsu.internal.SwgType
+import ru.yarsu.domain.SwgType
 import java.util.UUID
 
 class TrucksStorage(
@@ -12,55 +12,6 @@ class TrucksStorage(
     fun getAllTrucks(): List<Trucks> = trucksList.toList()
 
     fun getTruckById(id: UUID?): Trucks? = trucksList.find { it.id == id }
-
-    fun getTrucksByExactModel(model: String): List<Trucks> = trucksList.filter { it.model == model }
-
-    fun getTruckByExactRegistration(registration: String): Trucks? = trucksList.find { it.registration == registration }
-
-    fun getTrucksByExactCapacity(capacity: Double): List<Trucks> = trucksList.filter { it.capacity == capacity }
-
-    fun getTrucksByExactVolume(volume: Double): List<Trucks> = trucksList.filter { it.volume == volume }
-
-    fun addTrucks(
-        model: String,
-        registration: String,
-        capacity: Double,
-        volume: Double,
-    ): UUID {
-        val newTruck =
-            Trucks(
-                id = UUID.randomUUID(),
-                model = model,
-                registration = registration,
-                capacity = capacity,
-                volume = volume,
-            )
-        trucksList.add(newTruck)
-        return newTruck.id
-    }
-
-    fun updateTruck(
-        id: UUID,
-        model: String,
-        registration: String,
-        capacity: Double,
-        volume: Double,
-    ): Boolean {
-        val index = trucksList.indexOfFirst { it.id == id }
-        if (index == -1) return false
-
-        val updatedTruck =
-            Trucks(
-                id = id,
-                model = model,
-                registration = registration,
-                capacity = capacity,
-                volume = volume,
-            )
-
-        trucksList[index] = updatedTruck
-        return true
-    }
 
     fun deleteTruck(id: UUID): Boolean = trucksList.removeIf { it.id == id }
 

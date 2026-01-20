@@ -1,6 +1,6 @@
 package ru.yarsu.web.routes.dto.form
 
-import ru.yarsu.internal.SwgType
+import ru.yarsu.domain.SwgType
 import java.util.UUID
 
 data class InvoiceRequestValid(

@@ -1,6 +1,6 @@
 package ru.yarsu.web.routes.dto.json
 
-import ru.yarsu.internal.SwgType
+import ru.yarsu.domain.SwgType
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.UUID

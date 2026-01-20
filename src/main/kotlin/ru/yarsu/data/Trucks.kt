@@ -1,7 +1,7 @@
 package ru.yarsu.data
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import java.util.UUID
+import UUID
 
 data class Trucks(
     @field:JsonProperty("Id")
