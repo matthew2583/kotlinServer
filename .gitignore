@@ -1,20 +1,16 @@
-# Gradle
+# Gradle & Build
 .gradle/
 build/
-!gradle/wrapper/gradle-wrapper.jar
+buildSrc/build/
 
 # IDE
 .idea/
 *.iml
-*.ipr
-*.iws
 .vscode/
 
-# Kotlin
+# JVM
 *.class
 *.jar
-*.war
-*.ear
 
 # OS
 .DS_Store
@@ -23,8 +19,5 @@ Thumbs.db
 # Logs
 *.log
 
-# Local configuration
+# Local
 local.properties
-
-# BuildSrc
-buildSrc/build/
