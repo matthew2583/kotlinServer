@@ -18,12 +18,17 @@ repositories {
 val jacksonVersion = "2.18.2"
 val http4kVersion = "6.5.0.0"
 val junitVersion = "5.11.4"
+val micrometerVersion = "1.14.3"
 
 dependencies {
     // HTTP4K Web Framework
     implementation("org.http4k:http4k-core:$http4kVersion")
     implementation("org.http4k:http4k-server-netty:$http4kVersion")
     implementation("org.http4k:http4k-format-jackson:$http4kVersion")
+
+    // Metrics (Prometheus + Micrometer)
+    implementation("org.http4k:http4k-ops-micrometer:$http4kVersion")
+    implementation("io.micrometer:micrometer-registry-prometheus:$micrometerVersion")
 
     // Jackson for JSON
     implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")

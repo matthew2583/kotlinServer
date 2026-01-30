@@ -2,6 +2,7 @@
 .gradle/
 build/
 buildSrc/build/
+bin/
 
 # IDE
 .idea/
@@ -11,6 +12,7 @@ buildSrc/build/
 # JVM
 *.class
 *.jar
+.kotlin/
 
 # OS
 .DS_Store
