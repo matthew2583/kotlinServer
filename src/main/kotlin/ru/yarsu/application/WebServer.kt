@@ -46,10 +46,11 @@ class WebServer {
             ).withFilter(lensFailureFilter)
 
         // Объединяем роуты приложения с эндпоинтом метрик
-        val routesWithMetrics = routes(
-            MetricsConfig.metricsEndpoint(),
-            appRoutes,
-        )
+        val routesWithMetrics =
+            routes(
+                MetricsConfig.metricsEndpoint(),
+                appRoutes,
+            )
 
         // Применяем фильтр метрик ко всем запросам
         val app = MetricsConfig.metricsFilter().then(routesWithMetrics)

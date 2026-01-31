@@ -19,19 +19,22 @@ object MetricsConfig {
      * Фильтр для сбора метрик HTTP-запросов
      * Собирает: количество запросов, время ответа, статус-коды
      */
-    fun metricsFilter() = ServerFilters.MicrometerMetrics.RequestCounter(prometheusRegistry)
-        .then(ServerFilters.MicrometerMetrics.RequestTimer(prometheusRegistry))
+    fun metricsFilter() =
+        ServerFilters.MicrometerMetrics
+            .RequestCounter(prometheusRegistry)
+            .then(ServerFilters.MicrometerMetrics.RequestTimer(prometheusRegistry))
 
     /**
      * Эндпоинт /metrics для Prometheus scraping
      */
-    fun metricsEndpoint(): RoutingHttpHandler = routes(
-        "/metrics" bind Method.GET to {
-            Response(Status.OK)
-                .header("Content-Type", "text/plain; version=0.0.4")
-                .body(prometheusRegistry.scrape())
-        }
-    )
+    fun metricsEndpoint(): RoutingHttpHandler =
+        routes(
+            "/metrics" bind Method.GET to {
+                Response(Status.OK)
+                    .header("Content-Type", "text/plain; version=0.0.4")
+                    .body(prometheusRegistry.scrape())
+            },
+        )
 
     /**
      * Регистрация кастомных метрик приложения
